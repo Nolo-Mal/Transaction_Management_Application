@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+
+<head>
+
+    <style>
+
+        table {
+
+            width: 50%;
+
+            border-collapse: collapse;
+
+            font-size: 10px;
+
+        }
+
+
+
+        th, td {
+
+            border: 1px solid gray;
+
+            padding: 2px;
+
+            text-align: center;
+
+        }
+
+
+
+        th {
+
+            background-color: #f2f2f2;
+
+        }
+
+    </style>
+
+</head>
+
+<header style="text-align: center;">
+
+    <img src="{{ url_for('static', filename='img/absa_logo.png') }}" alt="ABSA Logo" style="width: 100px;">
+
+</header>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="navbar">
+
+    <a href="#dashboard" class="active">Dashboard</a>
+
+    <a href="#myaccount">My Account</a>
+
+    <a href="#administration">Administration</a>
+
+    <a href="{{ url_for('support') }}">Support</a>
+
+    
+
+</div>
+
+
+
+<div class="sub-navbar">
+
+    <!-- <a href="#transactions" class="active">Transactions</a> -->
+
+</div>
+
+
+
+<div class="filter-bar">
+
+    <button class="filter-button">Saved Reports</button>
+
+</div>
+
+
+
+<div class="dashboard-container">
+
+    <h1>Transaction Dashboard</h1>
+
+    
+
+    <form method="POST" action="/search" class="dashboard-form">
+
+        <div class="form-row">
+
+            <label for="merchant_no">Merchant Number</label>
+
+            <input type="text" id="merchant-number" name="merchant-number" pattern="\d*" title="Please enter digits only">
+
+        </div>
+
+        <div class="form-row">
+
+            <label for="tran_date">Date (mm/dd/yy)</label>
+
+            <input type="text" id="tran_date" name="tran_date">
+
+        </div>
+
+        
+
+        <div class="form-row">
+
+            <label for="rrn">Rrn:</label>
+
+            <input type="text" id="rrn" name="rrn">
+
+        </div>
+
+        <div class="form-row">
+
+            <label for="device_id">Device Id</label>
+
+            <input type="text" id="device_id" name="device_id">
+
+        </div>
+
+        <div class="form-row">
+
+            <label for="authcode">Authcode</label>
+
+            <input type="text" id="authcode" name="authcode">
+
+        </div>
+
+        
+
+        <div class="button-row">
+
+            <button type="submit">Search</button>
+
+        </div>
+
+    </form>
+
+
+
+    
+
+
+
+    <form method="post" action="/clear_transactions">
+
+        <button type="submit">Clear All Transactions</button>
+
+    </form>
+
+
+
+
+
+
+
+    {% if transactions %}
+
+    <br>
+
+    <a href="{{ url_for('download') }}" name="export" class="download-button">Export To Excel</a>
+
+    <br>
+
+    <br>
+
+    <table>
+
+        <tr>
+
+            <th>Card FIID</th>
+
+            <th>Term FIID</th>
+
+            <th>Card Number</th>
+
+            <th>Merchant Number</th>
+
+            <th>Device ID</th>
+
+            <th>Batch Number</th>
+
+            <th>Proc Code</th>
+
+            <th>Response Code</th>
+
+            <th>Responder</th>
+
+            <th>ECOM Flag</th>
+
+            <th>PIN Indicator</th>
+
+            <th>UCAF</th>
+
+             
+
+            <th>RRN</th>
+
+            <th>Merchant Name</th>
+
+            <th>Transaction Amount</th>
+
+            <!-- <th>Account Number</th> -->
+
+            <th>Auth Code</th>
+
+            <th>Migration Indicator</th>
+
+            <!-- <th>Trace ID</th> -->
+
+            <!-- <th>POS Entry Mode</th> -->
+
+            <th>EDC</th>
+
+            <th>Transaction Date</th>
+
+            <th>Transaction Time</th>
+
+            <th>Message Type</th>
+
+        </tr>
+
+        {% for transaction in transactions %}
+
+        <tr>
+
+            <td>{{ transaction.card_fiid }}</td>
+
+            <td>{{ transaction.term_fiid }}</td>
+
+            <td>{{ transaction.card_no }}</td>
+
+            <td>{{ transaction.merchant_no }}</td>
+
+            <td>{{ transaction.device_id }}</td>
+
+            <td>{{ transaction.batch_no }}</td>
+
+            <td>{{ transaction.proc_code }}</td>
+
+            <td>{{ transaction.response_code }}</td>
+
+            <td>{{ transaction.responder }}</td>
+
+            <td>{{ transaction.ecom_flag }}</td>
+
+            <td>{{ transaction.pin_ind }}</td>
+
+            <td>{{ transaction.ucaf }}</td>
+
+            <td>{{ transaction.rrn }}</td>
+
+            <td>{{ transaction.merchant_name }}</td>
+
+            <td>{{ transaction.tran_amount }}</td>
+
+            <!-- <td>{{ transaction.account_no }}</td> -->
+
+            <td>{{ transaction.auth_code }}</td>
+
+            <td>{{ transaction.migration_ind }}</td>
+
+            <!-- <td>{{ transaction.trace_id }}</td> -->
+
+            <!-- <td>{{ transaction.pos_entry_mode }}</td> -->
+
+            <td>{{ transaction.edc }}</td>
+
+            <td>{{ transaction.tran_date }}</td>
+
+            <td>{{ transaction.tran_time }}</td>
+
+            <td>{{ transaction.message_type }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <!-- <a href="/download" class="download-button">Download Transactions</a> -->
+
+    {% endif %}
+
+</div>
+
+
+
+<a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+
+<br>
+
+<br>
+
+<br>
+
+{% endblock %}

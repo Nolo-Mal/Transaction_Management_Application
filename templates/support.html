@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+
+<header style="text-align: center;">
+
+    <img src="{{ url_for('static', filename='img/absa_logo.png') }}" alt="ABSA Logo" style="width: 100px;">
+
+</header>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="navbar">
+
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+    <a href="#myaccount">My Account</a>
+
+    <a href="#administration">Administration</a>
+
+    <a href="{{ url_for('support') }}" class="active">Support</a>
+
+</div>
+
+
+
+<div class="support-container">
+
+    <h2>Support Team</h2>
+
+    <ul class="support-list">
+
+        {% for member in support_team %}
+
+        <li>
+
+            <h3>{{ member.name }}</h3>
+
+            <p>{{ member.title }}<br>
+
+               {{ member.team }}<br>
+
+               <span id="email-{{ loop.index }}">{{ member.email }}</span>
+
+               <button onclick="copyToClipboard('{{ member.email }}')">Copy</button>
+
+            </p>
+
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+
+
+<script>
+
+function copyToClipboard(email) {
+
+    navigator.clipboard.writeText(email).then(() => {
+
+        alert('Email copied to clipboard');
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

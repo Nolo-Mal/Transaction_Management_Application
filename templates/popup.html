@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<body class="user-login-page">
+
+    <div class="popup-container">
+
+        <h2>New Password</h2>
+
+        <p>Your new password is: <strong>{{ new_password }}</strong></p>
+
+        <button onclick="copyPassword()">Copy Password</button>
+
+        <a href="{{ url_for('login') }}">Go back to login</a>
+
+    </div>
+
+    <script>
+
+        function copyPassword() {
+
+            const password = "{{ new_password }}";
+
+            navigator.clipboard.writeText(password).then(() => {
+
+                alert('Password copied to clipboard');
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+
+
+{% endblock %}
